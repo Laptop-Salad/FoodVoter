@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="#">
+    <title>Favourite Food Poll</title>
+</head>
+
+<body>
+    <div class="card-container">
+        <div class="card">
+            <h2 id="pizza">Pizza</h2>
+            <hr>
+            <img src="assets/pizza.jpg" alt="pizza">
+            <button id="pizzaBtn">Vote</button>
+        </div>
+
+        <div class="card">
+            <h2 id="mac">Macaroni</h2>
+            <hr>
+            <img src="assets/mac.jpg" alt="mac and cheese in a bowl">
+            <button id="macBtn">Vote</button>
+        </div>
+
+        <div class="card">
+            <h2 id="toast">Avocado Toast</h2>
+            <hr>
+            <img src="assets/avocado-toast.jpg" alt="avocado toast">
+            <button id="toastBtn">Vote</button>
+        </div>
+
+        <div class="card">
+            <h2 id="waffles">Waffles</h2>
+            <hr>
+            <img src="assets/waffles.jpg" alt="waffles">
+            <button id="wafflesBtn">Vote</button>
+        </div>
+
+    </div>
+    <div class="card-container">
+        <div class="card">
+            <h2 id="soup">Soup</h2>
+            <hr>
+            <img src="assets/soup.jpg" alt="soup">
+            <button id="soupBtn">Vote</button>
+        </div>
+
+        <div class="card">
+            <h2 id="chicken">Fried Chicken</h2>
+            <hr>
+            <img src="assets/fried-chicken.jpg" alt="soup">
+            <button id="chickenBtn">Vote</button>
+        </div>
+
+        <div class="card">
+            <h2 id="salad">Salad</h2>
+            <hr>
+            <img src="assets/salad.jpg">
+            <button id="saladBtn">Vote</button>
+        </div>
+
+        <div class="card">
+            <h2 id="muffins">Muffins</h2>
+            <hr>
+            <img src="assets/muffins.jpg">
+            <button id="muffinsBtn">Vote</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script>
+        var contract;
+
+        $(document).ready(function() {
+            web3 = new Web3(web3.currentProvider);
+
+            var address = "0xB71Fb0E9267df0BdAdC43404E66cEDe2A12079F0";
+            var abi = [{
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "candidateId",
+                    "type": "uint256"
+                }],
+                "name": "Voted",
+                "type": "event"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "name": "candidateAccts",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "candidateKey",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "name": "candidates",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "votes",
+                    "type": "uint256"
+                }, {
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "string",
+                    "name": "_name",
+                    "type": "string"
+                }],
+                "name": "creatCandidate",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "createVoter",
+                "outputs": [{
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_address",
+                    "type": "address"
+                }],
+                "name": "delegate",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_key",
+                    "type": "uint256"
+                }],
+                "name": "getCandidateVotes",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "getVoterVotes",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "getamountOfCandidates",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "hasVoted",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_key",
+                    "type": "uint256"
+                }],
+                "name": "vote",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "name": "voterAccts",
+                "outputs": [{
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }],
+                "name": "voters",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "votes",
+                    "type": "uint256"
+                }, {
+                    "internalType": "bool",
+                    "name": "voted",
+                    "type": "bool"
+                }, {
+                    "internalType": "string",
+                    "name": "chosenCandidate",
+                    "type": "string"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }];
+            contract = new web3.eth.Contract(abi, address);
+
+            // For updating pizza
+            contract.methods.getCandidateVotes(1).call().then(function(votes) {
+                const update = "Pizza: " + String(votes);
+                $('#pizza').html(update);
+            });
+
+            // To vote for pizza
+            $('#pizzaBtn').click(function() {
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(1).send({
+                        from: accounts[0]
+                    });
+                    window.alert("Please be patient, this may take a few moments...");
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for pizza. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for pizza was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(1).call().then(function(votes) {
+                    const update = "Pizza: " + String(votes);
+                    $('#pizza').html(update);
+                });
+
+            })
+
+            // For updating macaroni
+            contract.methods.getCandidateVotes(2).call().then(function(votes) {
+                const update = "Macaroni: " + String(votes);
+                $('#mac').html(update);
+            })
+
+            // To vote for macaroni
+            $('#macBtn').click(function() {
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(2).send({
+                        from: accounts[0]
+                    });
+                    window.alert("Please be patient, this may take a few moments...");
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for macaroni. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for macaroni was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(2).call().then(function(votes) {
+                    const update = "Macaroni: " + String(votes);
+                    $('#mac').html(update);
+                })
+
+            })
+
+            // For updating avocado toast
+            contract.methods.getCandidateVotes(3).call().then(function(votes) {
+                const update = "Avocado Toast: " + String(votes);
+                $('#toast').html(update);
+            })
+
+            // To vote for macaroni
+            $('#toastBtn').click(function() {
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(3).send({
+                        from: accounts[0]
+                    });
+                    window.alert("Please be patient, this may take a few moments...");
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for avocado toast. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for avocado toast was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(3).call().then(function(votes) {
+                    const update = "Avocado Toast: " + String(votes);
+                    $('#toast').html(update);
+                })
+
+            })
+
+
+            // For updating waffles
+            contract.methods.getCandidateVotes(4).call().then(function(votes) {
+                const update = "Waffles: " + String(votes);
+                $('#waffles').html(update);
+            })
+
+            // To vote for macaroni
+            $('#wafflesBtn').click(function() {
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(4).send({
+                        from: accounts[0]
+                    });
+                    window.alert("Please be patient, this may take a few moments...");
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for waffles. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for waffles was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(4).call().then(function(votes) {
+                    const update = "Waffles: " + String(votes);
+                    $('#waffles').html(update);
+                })
+
+            })
+
+            // For updating soup
+            contract.methods.getCandidateVotes(5).call().then(function(votes) {
+                const update = "Soup: " + String(votes);
+                $('#soup').html(update);
+            })
+
+            // To vote for soup
+            $('#soupBtn').click(function() {
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(5).send({
+                        from: accounts[0]
+                    });
+                    window.alert("Please be patient, this may take a few moments...");
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for soup. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for soup was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(5).call().then(function(votes) {
+                    const update = "Soup: " + String(votes);
+                    $('#soup').html(update);
+                })
+
+            })
+
+
+            // For updating fried chicken
+            contract.methods.getCandidateVotes(6).call().then(function(votes) {
+                const update = "Fried Chicken: " + String(votes);
+                $('#chicken').html(update);
+            })
+
+            // To vote for macaroni
+            $('#chickenBtn').click(function() {
+                window.alert("Please be patient, this may take a few moments...");
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(6).send({
+                        from: accounts[0]
+                    });
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for fried chicken. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for fried chicken was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(6).call().then(function(votes) {
+                    const update = "Fried Chicken: " + String(votes);
+                    $('#chicken').html(update);
+                })
+
+            })
+
+
+
+            // For updating salad
+            contract.methods.getCandidateVotes(7).call().then(function(votes) {
+                const update = "Salad: " + String(votes);
+                $('#salad').html(update);
+            })
+
+            // To vote for macaroni
+            $('#saladBtn').click(function() {
+                window.alert("Please be patient, this may take a few moments...");
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    // Call the vote function
+                    return contract.methods.vote(7).send({
+                        from: accounts[0]
+                    });
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for salad. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for salad was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(7).call().then(function(votes) {
+                    const update = "Salad: " + String(votes);
+                    $('#salad').html(update);
+                })
+
+            })
+
+            // For updating muffins
+            contract.methods.getCandidateVotes(8).call().then(function(votes) {
+                const update = "Muffins: " + String(votes);
+                $('#muffins').html(update);
+            })
+
+            // To vote for macaroni
+            $('#muffinsBtn').click(function() {
+                window.alert("Please be patient, this may take a few moments...");
+                // Get user accounts
+                web3.eth.getAccounts().then(function(accounts) {
+                    window.alert("This may take a few minutes...");
+                    // Call the vote function
+                    return contract.methods.vote(8).send({
+                        from: accounts[0]
+                    });
+                    // If successful...
+                }).then(function(tx) {
+                    window.alert("You have voted for muffins. Thank you for voting!");
+                    // If not successful...
+                }).catch(function(tx) {
+                    window.alert("Voting for muffins was unsuccessful...");
+                })
+
+                // Then update the UI
+                contract.methods.getCandidateVotes(8).call().then(function(votes) {
+                    const update = "Muffins: " + String(votes);
+                    $('#muffins').html(update);
+                })
+
+            })
+
+        });
+    </script>
+</body>
+
+</html>

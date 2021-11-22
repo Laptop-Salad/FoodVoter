@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Favourite Food Voter</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <script src="script.js"></script>
+    <link rel="shortcut icon" href="#">
+
+</head>
+
+<body>
+
+    <div class="login">
+        <h1 class="title">Favourite Foods Poll</h1>
+        <button id="login-btn" onmouseover="buttonHover()" onmouseleave="buttonLeave()">Vote Now!</button>
+    </div>
+
+
+    <img id="polls-img" src="assets/polls.svg" alt="polls">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            web3 = new Web3(web3.currentProvider);
+
+            var address = "0xB71Fb0E9267df0BdAdC43404E66cEDe2A12079F0";
+            var abi = [{
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "candidateId",
+                    "type": "uint256"
+                }],
+                "name": "Voted",
+                "type": "event"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "name": "candidateAccts",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "candidateKey",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "name": "candidates",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "votes",
+                    "type": "uint256"
+                }, {
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "string",
+                    "name": "_name",
+                    "type": "string"
+                }],
+                "name": "creatCandidate",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "createVoter",
+                "outputs": [{
+                    "internalType": "string",
+                    "name": "",
+                    "type": "string"
+                }],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "_address",
+                    "type": "address"
+                }],
+                "name": "delegate",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_key",
+                    "type": "uint256"
+                }],
+                "name": "getCandidateVotes",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "getVoterVotes",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "getamountOfCandidates",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [],
+                "name": "hasVoted",
+                "outputs": [{
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "_key",
+                    "type": "uint256"
+                }],
+                "name": "vote",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "name": "voterAccts",
+                "outputs": [{
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }, {
+                "inputs": [{
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }],
+                "name": "voters",
+                "outputs": [{
+                    "internalType": "uint256",
+                    "name": "votes",
+                    "type": "uint256"
+                }, {
+                    "internalType": "bool",
+                    "name": "voted",
+                    "type": "bool"
+                }, {
+                    "internalType": "string",
+                    "name": "chosenCandidate",
+                    "type": "string"
+                }],
+                "stateMutability": "view",
+                "type": "function"
+            }];
+            contract = new web3.eth.Contract(abi, address);
+
+            // When user clicks the enter button/login button
+            $('#login-btn').click(function() {
+                // Get account
+                web3.eth.getAccounts().then(function(accounts) {
+
+                    // Check if user has voted before
+                    contract.methods.getVoterVotes().call({
+                        from: accounts[0]
+                    }).then(function(voterVotes) {
+                        // If user has voted then take user straight to main page
+                        if (voterVotes > 0) {
+                            window.location.href = "main.html";
+                            // Otherwise initialise their voter account
+                        } else {
+                            web3.eth.getAccounts().then(function(accounts) {
+                                window.alert("This may take a few minutes...");
+                                window.ethereum.enable()
+                                return contract.methods.createVoter().send({
+                                    from: accounts[0]
+                                });
+                            }).then(function(tx) {
+                                window.alert("Logging into your was successful. Happy voting!");
+                                window.location.href = "main.html";
+                            }).catch(function(tx) {
+                                console.log(tx);
+                                window.alert("Loggin in to your account was unsuccessful... Try logging into metamask?");
+                            });
+                        };
+                    });
+                })
+            })
+
+        })
+    </script>
+</body>
+
+</html>
