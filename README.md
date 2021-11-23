@@ -11,7 +11,7 @@ To build a dApp you need a smart contract, which runs on a blockchain. Using [re
 
 ## What's next?
 - Currently, the dapp gives you a new vote every time you enter the website, giving you essentially an infinite number of votes. Next step is to prevent this
-- The UI can be improved. For example, a better colour scheme, making sure the images don't stretch
+- The UI can be improved. For example, a better colour scheme, making sure the images don't stretch, just generally improving the UI
 - Making the website mobile friendly 
 
 ## Acknowledgements
