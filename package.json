@@ -1,0 +1,23 @@
+{
+    "name": "foodvoter",
+    "version": "1.0.0",
+    "description": "A decentralized voting app",
+    "main": "script.js",
+    "scripts": {
+        "build": "tailwindcss build src/styles.css -o public/styles.css"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Laptop-Salad/FoodVoter.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Laptop-Salad/FoodVoter/issues"
+    },
+    "homepage": "https://github.com/Laptop-Salad/FoodVoter#readme",
+    "dependencies": {
+        "tailwindcss": "^2.2.19"
+    }
+}
