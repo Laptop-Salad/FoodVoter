@@ -5,21 +5,39 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Favourite Food Voter</title>
-    <link href="styles.css" rel="stylesheet" type="text/css" />
+    <link href="public/styles.css" rel="stylesheet" type="text/css" />
     <script src="script.js"></script>
     <link rel="shortcut icon" href="#">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;1,100&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body class="flex flex-column font-roboto">
+    <!-- Side Bar -->
+    <div style="background-image: url('assets/HelloBg.jpg');" class="h-screen w-1/2 bg-cover bg-center text-white">
+        <h1 class="text-7xl text-center ml-24 mt-24 mr-24 mb-4">Favourite Foods</h1>
+        <p class="text-xl ml-32">Welcome to the favourite foods poll,</p>
+        <p class="text-xl ml-32">Click enter app to begin!</p>
 
-    <div class="login">
-        <h1 class="title">Favourite Foods Poll</h1>
-        <button id="login-btn" onmouseover="buttonHover()" onmouseleave="buttonLeave()">Vote Now!</button>
+        <!-- Bottom Bar -->
+        <div class="w-1/2 h-24 absolute bottom-0 bg-lightCyan">
+
+        </div>
     </div>
 
+    <!-- The other bit -->
+    <div class="p-0 m-0">
+        <!-- Hello Box -->
+        <div style="background-image: url('assets/Berries.jpg');" class=" rounded-2xl mt-6 ml-48 mr-48 h-96 w-96 bg-center bg-cover drop-shadow-md">
+        </div>
 
-    <img id="polls-img" src="assets/polls.svg" alt="polls">
+        <!-- Login -->
+        <div class="md:flex md:justify-center w-72 h-24 rounded-2xl mt-20 ml-60 mr-60 bg-darkCyan drop-shadow-md text-center text-white">
+            <button id="login-btn" class="text-center">Enter App</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
 
