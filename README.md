@@ -14,9 +14,3 @@ To build a dApp you need a smart contract, which runs on a blockchain. Using [re
 - The UI can be improved. For example, a better colour scheme, making sure the images don't stretch, just generally improving the UI
 - Making the website mobile friendly 
 
-## Acknowledgements
-A list of resources that helped me build this project
-
-- Images from : [Pexels](https://www.pexels.com/)
-- To connect the smart contract to the frontend: [Blockchain Tutorial](https://www.youtube.com/watch?v=UqQMSVfugFA&list=PLsyeobzWxl7oY6tZmnZ5S7yTDxyu4zDW-&t=0s) 
-- Learn solidity : [CryptoZombies](https://cryptozombies.io/)
